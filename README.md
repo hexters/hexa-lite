@@ -1,5 +1,10 @@
 # Filament Hexa Lite
 
+[![Latest Stable Version](https://poser.pugx.org/hexters/hexa-lite/v/stable)](https://packagist.org/packages/hexters/hexa-lite)
+[![Total Downloads](https://poser.pugx.org/hexters/hexa-lite/downloads)](https://packagist.org/packages/hexters/hexa-lite)
+[![License](https://poser.pugx.org/hexters/hexa-lite/license)](https://packagist.org/packages/hexters/hexa-lite)
+
+
 Filament Hexa Lite is an effortless role & permission plugin for Filament, inspired by the concept of [hexters/ladmin](https://github.com/hexters/ladmin). This concept facilitates managing each role and permission inline with code and provides an easy-to-understand interface.
 
 This plugin is intended only for Administrators, as it has a separate admin table from the user table provided by Laravel. Additionally, this plugin will replace the `auth.php` configuration file.
