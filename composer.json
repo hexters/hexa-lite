@@ -1,0 +1,43 @@
+{
+    "name": "hexters/hexa-lite",
+    "license": "MIT",
+    "description": "Filament Hexa is a effortless role and permission management plugin for Filament",
+    "keywords": [
+        "Hexa plugin",
+        "role and permission Filament",
+        "role management Filament",
+        "access permissions Filament",
+        "Hexa Filament",
+        "Hexa plugin",
+        "hexters ladmin",
+        "Hexa installation",
+        "Filament integration",
+        "Filament permission setup",
+        "Filament access control",
+        "role management PHP",
+        "Filament panel",
+        "Filament resource access",
+        "Filament widget permissions"
+    ],
+    "autoload": {
+        "psr-4": {
+            "Hexters\\HexaLite\\": "src/"
+        },
+        "files": [
+            "src/functions.php"
+        ]
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Hexters\\HexaLite\\HexaServiceProvider"
+            ]
+        }
+    },
+    "authors": [
+        {
+            "name": "Asep",
+            "email": "hexters@gmail.com"
+        }
+    ]
+}
