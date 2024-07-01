@@ -56,7 +56,7 @@ class HexaServiceProvider extends ServiceProvider
     {
         if ($this->hasPackage('filament/filament')) {
             $panel = Filament::getCurrentPanel();
-            if ($panel && in_array('filament-hexa', array_keys($panel->getPlugins()))) {
+            if ($panel && in_array('filament-hexa-lite', array_keys($panel->getPlugins()))) {
 
                 collect([
                     ...array_values($panel->getPages()),

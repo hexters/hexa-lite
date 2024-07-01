@@ -12,7 +12,7 @@ class HexaLite implements Plugin
 {
     public function getId(): string
     {
-        return 'filament-hexa';
+        return 'filament-hexa-lite';
     }
 
     public function register(Panel $panel): void
