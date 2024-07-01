@@ -9,7 +9,7 @@ use Hexters\HexaLite\Models\HexaAdmin;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 
-class HexaServiceProvider extends ServiceProvider
+class HexaLiteServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap services.
