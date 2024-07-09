@@ -3,6 +3,7 @@
 namespace Hexters\HexaLite;
 
 use Filament\Contracts\Plugin;
+use Filament\Navigation\NavigationItem;
 use Filament\Panel;
 use Hexters\HexaLite\Middleware\OnlineMiddleware;
 use Hexters\HexaLite\Resources\AdminResource;
@@ -23,6 +24,13 @@ class HexaLite implements Plugin
             ->resources([
                 AdminResource::class,
                 RoleResource::class,
+            ])
+            ->navigationItems([
+                NavigationItem::make('Options')
+                    ->url('https://github.com/hexters/hexa-docs?tab=readme-ov-file#options-setting', shouldOpenInNewTab: true)
+                    ->icon('heroicon-o-wrench-screwdriver')
+                    ->group('Setting & Access')
+                    ->sort(4000),
             ])
             ->authMiddleware([
                 OnlineMiddleware::class,
