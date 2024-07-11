@@ -72,7 +72,7 @@ class HexaAdmin extends Authenticatable implements HasAvatar, FilamentUser
 
     public function roles()
     {
-        return $this->belongsToMany(hexaRole::class, 'hexa_role_admin', 'hexa_admin_id', 'hexa_role_id');
+        return $this->belongsToMany(HexaRole::class, 'hexa_role_admin', 'hexa_admin_id', 'hexa_role_id');
     }
 
     public function canAccessPanel(Panel $panel): bool

@@ -16,7 +16,7 @@ use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Hexters\HexaLite\Forms\Components\Permission;
-use Hexters\HexaLite\Models\hexaRole;
+use Hexters\HexaLite\Models\HexaRole;
 use Hexters\HexaLite\Traits\HexAccess;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
