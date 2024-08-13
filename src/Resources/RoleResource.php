@@ -59,7 +59,7 @@ class RoleResource extends Resource
 
     protected static ?string $navigationGroup = 'Setting & Access';
 
-    protected static ?string $model = hexaRole::class;
+    protected static ?string $model = HexaRole::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-lock-closed';
 
