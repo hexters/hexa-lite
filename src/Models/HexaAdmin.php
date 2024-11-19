@@ -66,7 +66,7 @@ class HexaAdmin extends Authenticatable implements HasAvatar, FilamentUser
 
     public function getFilamentAvatarUrl(): ?string
     {
-        $gravurl = "https://www.gravatar.com/avatar/" . hash("sha256", strtolower(trim($this->email))) .  "&s=200";
+        $gravurl = "https://www.gravatar.com/avatar/" . hash("sha256", strtolower(trim($this->email))) .  "?s=200";
         return is_null($this->avatar_url) ? $gravurl : asset("storage/{$this->avatar_url}");
     }
 
