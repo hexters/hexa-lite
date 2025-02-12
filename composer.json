@@ -1,5 +1,5 @@
 {
-    "name": "hexters/hexa-lite",
+    "name": "yowaitaminute/filamentphp-roles",
     "license": "MIT",
     "description": "Filament Hexa is a effortless role and permission management plugin for Filament",
     "keywords": [
@@ -38,6 +38,10 @@
         {
             "name": "Asep",
             "email": "hexters@gmail.com"
+        },    
+        {
+            "name": "YoWaitAMinute",
+            "email": "yowaitaminuteprofessional@gmail.com"
         }
     ]
 }
