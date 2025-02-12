@@ -4,8 +4,8 @@
 
             <div class="flex justify-between items-center mb-4">
                 <h3 class="font-bold">{{ __('List of Permissions') }}</h3>
-                <x-filament::button tag="a" href="https://github.com/hexters/hexa-docs" target="_blank" icon="heroicon-o-check-circle" size="sm" outlined
-                    x-on:click="selectAll('hexa-permission-list')">
+                <x-filament::button tag="a" href="" target="_blank" icon="heroicon-o-check-circle" size="sm" outlined
+                    x-on:click="selectAll('hexa-permission-list')"> 
                     {{ __('Select All / Deselect All') }}
                 </x-filament::button>
             </div>

@@ -2,11 +2,11 @@
 
 namespace Hexters\HexaLite\Commands;
 
+use Filament\Facades\Filament;
 use Hexters\HexaLite\Models\HexaAdmin;
 use Hexters\HexaLite\Models\HexaRole;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Hash;
-
 use function Laravel\Prompts\password;
 use function Laravel\Prompts\table;
 use function Laravel\Prompts\text;
@@ -71,13 +71,31 @@ class AdminCommand extends Command
         ]);
     }
 
+    protected function getEverything() {
+        $panel = Filament::getCurrentPanel();
+        $permissions = collect([
+            ...array_values($panel->getPages()),
+            ...array_values($panel->getResources()),
+        ])
+            ->filter(fn ($item) => method_exists(app($item), 'getPermissionId'))
+            ->map(fn ($item) => collect(app($item)->getKeySubPermissions())
+                ->push(app($item)->getPermissionId())
+                ->flatten()  
+                ->toArray())
+            ->flatten()
+            ->unique()
+            ->values();
+
+            return $permissions;
+    }
+
     protected function createRole(): HexaRole
     {
         $role = HexaRole::first();
         if (!$role) {
             $role = HexaRole::create([
                 'name' => 'Superadmin',
-                'permissions' => config('hexa-core.permissions.default'),
+                'permissions' => $this->getEverything(),
                 'state' => 'active',
             ]);
         }

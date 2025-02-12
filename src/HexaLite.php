@@ -26,11 +26,11 @@ class HexaLite implements Plugin
                 RoleResource::class,
             ])
             ->navigationItems([
-                NavigationItem::make('Options')
-                    ->url('https://github.com/hexters/hexa-docs?tab=readme-ov-file#options-setting', shouldOpenInNewTab: true)
-                    ->icon('heroicon-o-wrench-screwdriver')
-                    ->group('Setting & Access')
-                    ->sort(4000),
+                // NavigationItem::make('Options')
+                //     ->url('https://github.com/hexters/hexa-docs?tab=readme-ov-file#options-setting', shouldOpenInNewTab: true)
+                //     ->icon('heroicon-o-wrench-screwdriver')
+                //     ->group('Setting & Access')
+                //     ->sort(4000), // more advertisement.
             ])
             ->authMiddleware([
                 OnlineMiddleware::class,

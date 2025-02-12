@@ -11,6 +11,9 @@ class HexaCall
 {
     public function can($permissions)
     {
+        if (request()->user()->is_superadmin) {
+            return true; // superadmin's should have root access no?
+        }
         return Gate::allows($permissions) ?? false;
     }
 }
