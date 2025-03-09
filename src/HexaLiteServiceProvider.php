@@ -5,8 +5,6 @@ namespace Hexters\HexaLite;
 use Filament\Facades\Filament;
 use Hexters\HexaLite\Commands\AdminCommand;
 use Hexters\HexaLite\Commands\InstallCommand;
-use Hexters\HexaLite\Models\HexaAdmin;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 
 class HexaLiteServiceProvider extends ServiceProvider
@@ -20,8 +18,6 @@ class HexaLiteServiceProvider extends ServiceProvider
             $this->registerMigration();
 
             $this->registerView();
-
-            $this->registerGates();
 
             $this->registerPublishes();
 
@@ -50,40 +46,6 @@ class HexaLiteServiceProvider extends ServiceProvider
         }
 
         return $components;
-    }
-
-    protected function registerGates()
-    {
-        if ($this->hasPackage('filament/filament')) {
-            $panel = Filament::getCurrentPanel();
-            if ($panel && in_array('filament-hexa-lite', array_keys($panel->getPlugins()))) {
-
-                collect([
-                    ...array_values($panel->getPages()),
-                    ...array_values($panel->getResources()),
-                ])
-                    ->filter(fn ($item) => method_exists(app($item), 'getPermissionId'))
-                    ->map(fn ($item)  => collect(app($item)->getKeySubPermissions())
-                        ->push(app($item)->getPermissionId())
-                        ->toArray())
-                    ->each(function ($accesss) {
-                        foreach ($accesss as $access) {
-                            Gate::define($access, function ($admin) use ($access) {
-                                if ($admin instanceof HexaAdmin) {
-                                    $gates = collect();
-                                    foreach ($admin->roles as $role) {
-                                        if (!is_null($role->permissions)) {
-                                            $gates->push(...$role->permissions);
-                                        }
-                                    }
-                                    return in_array($access, $gates->toArray());
-                                }
-                                return false;
-                            });
-                        }
-                    });
-            }
-        }
     }
 
     protected function hasPackage($package)

@@ -6,8 +6,10 @@ use Filament\Contracts\Plugin;
 use Filament\Navigation\NavigationItem;
 use Filament\Panel;
 use Hexters\HexaLite\Middleware\OnlineMiddleware;
+use Hexters\HexaLite\Models\HexaAdmin;
 use Hexters\HexaLite\Resources\AdminResource;
 use Hexters\HexaLite\Resources\RoleResource;
+use Illuminate\Support\Facades\Gate;
 
 class HexaLite implements Plugin
 {
@@ -42,6 +44,30 @@ class HexaLite implements Plugin
 
     public function boot(Panel $panel): void
     {
+        collect([
+            ...array_values($panel->getPages()),
+            ...array_values($panel->getResources()),
+        ])
+            ->filter(fn ($item) => method_exists(app($item), 'getPermissionId'))
+            ->map(fn ($item)  => collect(app($item)->getKeySubPermissions())
+                ->push(app($item)->getPermissionId())
+                ->toArray())
+            ->each(function ($accesss) {
+                foreach ($accesss as $access) {
+                    Gate::define($access, function ($admin) use ($access) {
+                        if ($admin instanceof HexaAdmin) {
+                            $gates = collect();
+                            foreach ($admin->roles as $role) {
+                                if (!is_null($role->permissions)) {
+                                    $gates->push(...$role->permissions);
+                                }
+                            }
+                            return in_array($access, $gates->toArray());
+                        }
+                        return false;
+                    });
+                }
+            });
     }
 
     public static function make(): static
