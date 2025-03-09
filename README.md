@@ -31,6 +31,11 @@ Then, proceed with the installation of the hexa plugin:
 php artisan hexa:install
 ```
 
+Optional you can publish migration files:
+```bash
+php artisan vendor:publish --tag="filament-hexa-migrations"
+```
+
 Install database migrations:
 ```bash
 php artisan migrate

@@ -109,6 +109,10 @@ class HexaLiteServiceProvider extends ServiceProvider
             __DIR__ . '/../stubs/configs/auth.php' => config_path('auth.php'),
             __DIR__ . '/../stubs/models' => app_path('Models'),
         ], 'filament-hexa');
+
+        $this->publishesMigrations([
+            __DIR__ . '/../migrations' => database_path('migrations'),
+        ], 'filament-hexa-migrations');
     }
 
     protected function registerCommands()
