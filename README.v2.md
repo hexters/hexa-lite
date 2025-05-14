@@ -1,4 +1,4 @@
-# Filament Hexa Lite
+# Filament Hexa Lite - V2
 
 **Filament Hexa Lite** is a free and developer-friendly **role and permission management plugin** for [FilamentPHP](https://filamentphp.com/).  
 It helps you manage user roles and access permissions across Resources, Pages, and Widgets — with support for multi-panel apps via custom guards.
