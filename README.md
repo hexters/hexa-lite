@@ -1,54 +1,63 @@
-# Filament Hexa Lite
+# Filament Hexa Lite - V2
 
 [![Latest Stable Version](https://poser.pugx.org/hexters/hexa-lite/v/stable)](https://packagist.org/packages/hexters/hexa-lite)
 [![Total Downloads](https://poser.pugx.org/hexters/hexa-lite/downloads)](https://packagist.org/packages/hexters/hexa-lite)
 [![License](https://poser.pugx.org/hexters/hexa-lite/license)](https://packagist.org/packages/hexters/hexa-lite)
 
 
-Filament Hexa Lite is an effortless role & permission plugin for Filament, inspired by the concept of [hexters/ladmin](https://github.com/hexters/ladmin). This concept facilitates managing each role and permission inline with code and provides an easy-to-understand interface.
+**Filament Hexa Lite** is a free and developer-friendly **role and permission management plugin** for [FilamentPHP](https://filamentphp.com/).  
+It helps you manage user roles and access permissions across Resources, Pages, and Widgets — with support for multi-panel apps via custom guards.
 
-This plugin is intended only for Administrators, as it has a separate admin table from the user table provided by Laravel. Additionally, this plugin will replace the `auth.php` configuration file.
+Currently in version 2, Hexa Lite is more intuitive, customizable, and production-ready.
 
-![](https://github.com/hexters/assets/blob/main/hexa/v1/edit.png?raw=true)
+![Banner](https://github.com/hexters/assets/blob/main/hexa/v2/banner.png?raw=true)
 
-## About Filament
+---
 
-[FilamentPHP](https://filamentphp.com/) is a lightweight and flexible PHP framework designed for building web applications. It aims to simplify application development by providing a clear structure and high modularity. The framework emphasizes speed, efficiency, and comes with many built-in features that facilitate effective web application development.
+## Versions
+
+|Version|Doc.|
+|-|-|
+|V1|[Read Doc.](https://github.com/hexters/hexa-lite/blob/main/docs/README.v1.md)|
+|V2|[Read Doc.](https://github.com/hexters/hexa-lite/blob/main/README.md)|
+
+## Index
+
+- [Installation](#installation)
+- [Adding Role Selection](#adding-role-selection)
+- [Multi Panel Support](#multi-panel-support)
+- [Defining Permissions](#defining-permissions)
+- [Access Control](#access-control)
+  - [Check Permissions in Code](#check-permissions-in-code)
+  - [Visible Access](#visible-access)
+  - [Laravel Integration](#laravel-integration)
+- [Available Traits](#available-traits)
+- [Features in Pro Version](#features-in-pro-version)
+- [License](#license)
+- [Issues & Feedback](#issues--feedback)
+
+---
 
 ## Installation
 
-> **Note** <br>
-You need to install the filament package first. You can refer to the official site at [FilamentPHP](https://filamentphp.com)
-
-You can install it by running the command below:
+Install the package via Composer:
 
 ```bash
 composer require hexters/hexa-lite
-```
+````
 
-Then, proceed with the installation of the hexa plugin:
-```bash
-php artisan hexa:install
-```
+Run the database migration:
 
-Install database migrations:
 ```bash
 php artisan migrate
 ```
 
-Create a superadmin account for admin login:
-```bash
-php artisan hexa:account --create
-```
-
-## Plugin Setup
-
-Add the Filament `HexaLite` plugin to the created panel. If you haven't created one yet, see how to do it here [Creating a new panel](https://filamentphp.com/docs/3.x/panels/configuration#creating-a-new-panel).
+Register the plugin in your Filament panel:
 
 ```php
 use Filament\Panel;
 use Hexters\HexaLite\HexaLite;
- 
+
 public function panel(Panel $panel): Panel
 {
     return $panel
@@ -58,102 +67,189 @@ public function panel(Panel $panel): Panel
 }
 ```
 
-## Declaring Access Permissions
-
-### Resource & Page
-
-To declare access permissions for Resources and Pages, for Clusters you need to upgrade to the [hexters/hexa](https://github.com/hexters/hexa-docs) package.
+Apply the trait to your `User` model:
 
 ```php
-use Hexters\HexaLite\Traits\HexAccess;
+use Hexters\HexaLite\HexaLiteRolePermission;
 
-. . .
+class User extends Authenticatable
+{
+    use HasFactory, Notifiable;
+    use HexaLiteRolePermission;
+}
+```
 
-use HexAccess;
+---
 
-protected static ?string $permissionId = 'access.user';
+## Adding Role Selection
 
-protected static ?string $descriptionPermission = 'Admin can manage User accounts';
+To allow role assignment via the admin panel, add a select input to your `UserResource` form:
 
-/**
- * Additional permission (optional)
- * You can add it or not depending on the needs of your application.
- */
-protected static ?array $subPermissions = [
-    'access.user.create' => 'Can Create',
-    'access.user.edit' => 'Can Edit',
-    'access.user.delete' => 'Can Delete',
-];
+```php
+use Filament\Forms;
 
+public static function form(Form $form): Form
+{
+    return $form
+        ->schema([
+            Forms\Components\TextInput::make('email')
+                ->unique(ignoreRecord: true)
+                ->required(),
+
+            Forms\Components\Select::make('roles')
+                ->label(__('Role Name'))
+                ->relationship('roles', 'name')
+                ->placeholder(__('Superuser')),
+        ]);
+}
+```
+
+---
+
+## Multi Panel Support
+
+Hexa Lite supports multiple panels, each with its own `auth guard`.
+
+```php
+public function panel(Panel $panel): Panel
+{
+    return $panel->authGuard('reseller');
+}
+```
+
+```php
+public function panel(Panel $panel): Panel
+{
+    return $panel->authGuard('customer');
+}
+```
+
+Configure guards in `config/auth.php`.
+
+---
+
+## Defining Permissions
+
+Define permissions using the `defineGates()` method on Resources, Pages, or Widgets:
+
+```php
+use Hexters\HexaLite\HasHexaLite;
+
+class UserResource extends Resource
+{
+    use HasHexaLite;
+
+    public function defineGates(): array
+    {
+        return [
+            'user.index' => __('Allows viewing the user list'),
+            'user.create' => __('Allows creating a new user'),
+            'user.update' => __('Allows updating users'),
+            'user.delete' => __('Allows deleting users'),
+        ];
+    }
+}
+```
+
+---
+
+## Access Control
+
+Users with no assigned role are treated as **Superusers** and have full access by default.
+
+To restrict access to a resource:
+
+```php
 public static function canAccess(): bool
 {
-    return hexa()->can(static::$permissionId);
-}
-
-. . .
-```
-
-### Actions, etc.
-
-You can use the `visible()` method on several `Class Components`. For example, let's try it on a button.
-
-```php
-Tables\Actions\EditAction::make()
-    ->visible(hexa()->can('access.user.edit')),
-```
-
-For giving access to classes extended to `Filament\Resources\Pages\EditRecord`, `Filament\Resources\Pages\CreateRecord`, `Filament\Resources\Pages\ListRecords`, `Filament\Resources\Pages\ViewRecords`, you can use:
-```php
-/**
- * @param  array<string, mixed>  $parameters
- */
-public static function canAccess(array $parameters = []): bool
-{
-    return hexa()->can('access.user.edit');
+    return hexa()->can('user.index');
 }
 ```
 
-## Checking Access Permissions
+---
 
-Access can be granted to Resources, Pages, Widgets, Button Actions, etc. The access can be given as shown below.
+### Check Permissions in Code
 
-Using the hexa utility function:
+Useful in queued jobs, commands, or background services:
+
 ```php
-hexa()->can('hexa.admin')
+return hexa()->user(User::first())->can('user.index');
 ```
 
-Using Laravel's auth can function:
+---
+
+### Visible Access
+
+Use `visible()` to conditionally display UI elements:
+
 ```php
-auth()->user()?->can('hexa.admin')
+Actions\CreateAction::make('create')
+    ->visible(fn() => hexa()->can(['user.index', 'user.create']));
 ```
 
-Using Laravel's Gate class:
+---
+
+### Laravel Integration
+
+You can still use Laravel’s native authorization:
+
 ```php
-use Illuminate\Support\Facades\Gate;
+Auth::user()->can('user.create');
 
-. . .
+Gate::allows('user.create');
 
-Gate::allows('hexa.admin')
+Gate::forUser(User::first())->allows('user.create');
+
+@can('user.create')
+    // Blade directive
+@endcan
 ```
 
-In a blade template, you can use it as shown below.
+---
 
-```html
-<div>
-    @can('hexa.admin')
-        // Content here ...
-    @endcan
-</div>
-```
+## Available Traits
+
+| Trait                    | Description                                   |
+| ------------------------ | --------------------------------------------- |
+| `HexaLiteRolePermission` | Apply to your `Authenticatable` user model    |
+| `HasHexaLite`            | Use in Resources, Pages, Widgets, or Clusters |
+| `UuidGenerator`          | Use on models with `uuid` fields              |
+| `UlidGenerator`          | Use on models with `ulid` fields              |
+
+---
+
+## Features in Pro Version
+
+Need more flexibility and control?
+
+Filament Hexa **Pro v2** unlocks powerful features designed for serious projects:
+
+* Role & permission descriptions
+* Custom role sorting
+* Gate grouping (with nested access)
+* Multi-tenancy support
+* Meta option storage
+
+All of this — **starting at just $1 per license**.  
+A small investment for a much more capable permission system.
+
+Learn more in the official documentation:  
+👉 [Hexa Pro Documentation](https://github.com/hexters/hexa-docs)
+
+---
 
 ## License
-This project is licensed under the MIT License - see the [LICENSE](https://github.com/hexters/hexa-lite/blob/main/LICENSE.md) file for details.
 
-## Issue
+This project is open-source and licensed under the **MIT License**.
+You are free to use, modify, and distribute it with attribution.
 
-If you encounter any issues with this plugin, you can submit them to the repository:
-[Filament Hexa Lite Issue](https://github.com/hexters/hexa-lite/issues)
+---
 
-Thank you for using this plugin. We hope it speeds up your process in creating powerful applications.
+## Issues & Feedback
 
-Happy Coding 🧑‍💻 🧑‍💻 🧑‍💻
+Found a bug or want to contribute?
+
+Open an issue at:
+[https://github.com/hexters/hexa-lite/issues](https://github.com/hexters/hexa-lite/issues)
+
+Thank you for using Filament Hexa Lite!
