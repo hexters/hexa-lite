@@ -23,7 +23,7 @@ You need to install the filament package first. You can refer to the official si
 You can install it by running the command below:
 
 ```bash
-composer require hexters/hexa-lite
+composer require hexters/hexa-lite:1.3
 ```
 
 Then, proceed with the installation of the hexa plugin:

@@ -1,6 +1,6 @@
 <?php
 
-namespace Hexters\HexaLite\Traits;
+namespace Hexters\HexaLite\Helpers;
 
 use Illuminate\Support\Str;
 
@@ -14,11 +14,6 @@ trait UlidGenerator
         });
     }
 
-    /**
-     * Get the route key for the model.
-     *
-     * @return string
-     */
     public function getRouteKeyName()
     {
         return 'ulid';

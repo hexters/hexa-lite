@@ -2,28 +2,32 @@
 
 namespace Hexters\HexaLite\Models;
 
-use Hexters\HexaLite\Traits\UlidGenerator;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Team;
+use Filament\Facades\Filament;
+use Hexters\HexaLite\Helpers\UuidGenerator;
 use Illuminate\Database\Eloquent\Model;
 
 class HexaRole extends Model
 {
-    use HasFactory, UlidGenerator;
+
+    use UuidGenerator;
+
+    protected $table = 'hexa_roles';
 
     protected $fillable = [
-        'ulid',
         'name',
-        'permissions',
-        'type',
-        'state',
+        'created_by_name',
+        'access',
+        'team_id',
+        'guard',
     ];
 
     protected $casts = [
-        'permissions' => 'array'
+        'access' => 'array'
     ];
 
-    public function admins()
+    public function team()
     {
-        return $this->belongsToMany(HexaAdmin::class, 'hexa_role_admin', 'hexa_role_id', 'hexa_admin_id');
+        return $this->belongsTo(Filament::getTenantModel());
     }
 }

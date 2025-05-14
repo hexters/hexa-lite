@@ -13,12 +13,18 @@ return new class extends Migration
     {
         Schema::create('hexa_roles', function (Blueprint $table) {
             $table->id();
-            $table->ulid()->unique();
+            $table->uuid()->unique();
             $table->string('name');
-            $table->json('permissions');
-            $table->string('type')->nullable();
-            $table->string('state')->nullable();
+            $table->foreignId('team_id')->nullable();
+            $table->string('created_by_name')->nullable();
+            $table->json('access')->nullable();
+            $table->string('guard')->default('web');
             $table->timestamps();
+        });
+
+        Schema::create('hexa_role_user', function (Blueprint $table) {
+            $table->foreignId('role_id')->constrained('hexa_roles');
+            $table->foreignId('user_id');
         });
     }
 
@@ -28,5 +34,6 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('hexa_roles');
+        Schema::dropIfExists('hexa_role_user');
     }
 };

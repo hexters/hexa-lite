@@ -5,14 +5,14 @@ namespace Hexters\HexaLite;
 use Filament\Contracts\Plugin;
 use Filament\Navigation\NavigationItem;
 use Filament\Panel;
-use Hexters\HexaLite\Middleware\OnlineMiddleware;
-use Hexters\HexaLite\Models\HexaAdmin;
-use Hexters\HexaLite\Resources\AdminResource;
 use Hexters\HexaLite\Resources\RoleResource;
-use Illuminate\Support\Facades\Gate;
+use Hexters\HexaLite\Traits\GateTrait;
 
 class HexaLite implements Plugin
 {
+
+    use GateTrait;
+    
     public function getId(): string
     {
         return 'filament-hexa-lite';
@@ -20,56 +20,26 @@ class HexaLite implements Plugin
 
     public function register(Panel $panel): void
     {
-        $panel
-            ->authGuard('admin')
-            ->registration(false)
-            ->resources([
-                AdminResource::class,
-                RoleResource::class,
-            ])
-            ->navigationItems([
-                NavigationItem::make('Options')
-                    ->url('https://github.com/hexters/hexa-docs?tab=readme-ov-file#options-setting', shouldOpenInNewTab: true)
-                    ->icon('heroicon-o-wrench-screwdriver')
-                    ->group('Setting & Access')
-                    ->sort(4000),
-            ])
-            ->authMiddleware([
-                OnlineMiddleware::class,
-            ])
-            ->passwordReset()
-            ->authPasswordBroker('admins')
-            ->spa();
+        $panel->resources([
+            RoleResource::class
+        ]);
     }
 
     public function boot(Panel $panel): void
     {
-        collect([
-            ...array_values($panel->getPages()),
-            ...array_values($panel->getResources()),
-        ])
-            ->filter(fn ($item) => method_exists(app($item), 'getPermissionId'))
-            ->map(fn ($item)  => collect(app($item)->getKeySubPermissions())
-                ->push(app($item)->getPermissionId())
-                ->toArray())
-            ->each(function ($accesss) {
-                foreach ($accesss as $access) {
-                    Gate::define($access, function ($admin) use ($access) {
-                        if ($admin instanceof HexaAdmin) {
-                            $gates = collect();
-                            foreach ($admin->roles as $role) {
-                                if (!is_null($role->permissions)) {
-                                    $gates->push(...$role->permissions);
-                                }
-                            }
-                            return in_array($access, $gates->toArray());
-                        }
-                        return false;
-                    });
-                }
-            });
-    }
+        $this->registerGates($panel);
+        $this->registerGateList($panel);
 
+        $panel->navigationItems([
+            NavigationItem::make(__('Role & Permissions'))
+                ->visible(fn() => hexa()->can('role.index'))
+                ->url(RoleResource::getUrl())
+                ->isActiveWhen(fn() => request()->fullUrlIs(RoleResource::getUrl() . '*'))
+                ->icon('heroicon-o-lock-closed')
+                ->group(__('Settings')),
+        ]);
+    }
+    
     public static function make(): static
     {
         return app(static::class);
@@ -77,7 +47,6 @@ class HexaLite implements Plugin
 
     public static function get(): static
     {
-        /** @var static $plugin */
         $plugin = filament(app(static::class)->getId());
 
         return $plugin;
