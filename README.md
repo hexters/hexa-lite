@@ -18,7 +18,7 @@ Currently in version 2, Hexa Lite is more intuitive, customizable, and productio
 
 |Version|Doc.|
 |-|-|
-|V1|[Read Doc.](https://github.com/hexters/hexa-lite/blob/main/docs/README.v1.md)|
+|V1|[Read Doc.](https://github.com/hexters/hexa-lite/blob/main/docs/README.V1.md)|
 |V2|[Read Doc.](https://github.com/hexters/hexa-lite/blob/main/README.md)|
 
 ## Index
