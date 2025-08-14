@@ -1,10 +1,9 @@
 <?php
 
-namespace Hexters\HexaLite\Resources\RoleResource\Pages;
+namespace Hexters\HexaLite\Resources\Roles\Pages;
 
-use Hexters\HexaLite\Resources\RoleResource;
-use Filament\Actions;
 use Filament\Resources\Pages\CreateRecord;
+use Hexters\HexaLite\Resources\Roles\RoleResource;
 use Illuminate\Support\Facades\Auth;
 
 class CreateRole extends CreateRecord

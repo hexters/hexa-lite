@@ -1,10 +1,10 @@
 <?php
 
-namespace Hexters\HexaLite\Resources\RoleResource\Pages;
+namespace Hexters\HexaLite\Resources\Roles\Pages;
 
-use Hexters\HexaLite\Resources\RoleResource;
-use Filament\Actions;
+use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
+use Hexters\HexaLite\Resources\Roles\RoleResource;
 
 class ListRoles extends ListRecords
 {
@@ -13,7 +13,7 @@ class ListRoles extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make()
+            CreateAction::make()
                 ->visible(fn() => hexa()->can('role.create')),
         ];
     }

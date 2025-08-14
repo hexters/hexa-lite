@@ -1,26 +1,25 @@
-# Filament V4 & Hexa Lite V3
+# Filament Hexa Lite - V2
 
 [![Latest Stable Version](https://poser.pugx.org/hexters/hexa-lite/v/stable)](https://packagist.org/packages/hexters/hexa-lite)
 [![Total Downloads](https://poser.pugx.org/hexters/hexa-lite/downloads)](https://packagist.org/packages/hexters/hexa-lite)
 [![License](https://poser.pugx.org/hexters/hexa-lite/license)](https://packagist.org/packages/hexters/hexa-lite)
 
 
-**Filament Hexa Lite** is a free and developer-friendly **role and permission management plugin** for [FilamentPHP V4](https://filamentphp.com/).  
+**Filament Hexa Lite** is a free and developer-friendly **role and permission management plugin** for [FilamentPHP](https://filamentphp.com/).  
 It helps you manage user roles and access permissions across Resources, Pages, and Widgets — with support for multi-panel apps via custom guards.
 
-Currently in version 3, Hexa Lite is more intuitive, customizable, and production-ready.
+Currently in version 2, Hexa Lite is more intuitive, customizable, and production-ready.
 
 ![Banner](https://github.com/hexters/assets/blob/main/hexa/v2/banner.png?raw=true)
 
 ---
 
-## Version Docs.
+## Versions
 
-|Version|Filament|Doc.|
-|:-:|:-:|-|
-|V1|V3|[Read Doc.](https://github.com/hexters/hexa-lite/blob/main/docs/README.V1.md)|
-|V2|V3|[Read Doc.](https://github.com/hexters/hexa-lite/blob/main/README.V2.md)|
-|V3|V4|[Read Doc.](https://github.com/hexters/hexa-lite/blob/main/README.md)|
+|Version|Doc.|
+|-|-|
+|V1|[Read Doc.](https://github.com/hexters/hexa-lite/blob/main/docs/README.V1.md)|
+|V2|[Read Doc.](https://github.com/hexters/hexa-lite/blob/main/README.md)|
 
 ## Index
 
@@ -38,13 +37,13 @@ Currently in version 3, Hexa Lite is more intuitive, customizable, and productio
 - [Issues & Feedback](#issues--feedback)
 
 ---
-    
+
 ## Installation
 
 Install the package via Composer:
 
 ```bash
-composer require hexters/hexa-lite
+composer require hexters/hexa-lite:"2.0"
 ````
 
 Run the database migration:
@@ -84,21 +83,20 @@ class User extends Authenticatable
 
 ## Adding Role Selection
 
-To allow role assignment via the admin panel, add a select input to your `UserForm` class:
+To allow role assignment via the admin panel, add a select input to your `UserResource` form:
 
 ```php
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\TextInput;
+use Filament\Forms;
 
 public static function form(Form $form): Form
 {
     return $form
         ->schema([
-            TextInput::make('email')
+            Forms\Components\TextInput::make('email')
                 ->unique(ignoreRecord: true)
                 ->required(),
 
-            Select::make('roles')
+            Forms\Components\Select::make('roles')
                 ->label(__('Role Name'))
                 ->relationship('roles', 'name')
                 ->placeholder(__('Superuser')),
@@ -224,7 +222,7 @@ Gate::forUser(User::first())->allows('user.create');
 
 Need more flexibility and control?
 
-Filament Hexa **Pro v3** unlocks powerful features designed for serious projects:
+Filament Hexa **Pro v2** unlocks powerful features designed for serious projects:
 
 * Role & permission descriptions
 * Custom role sorting
@@ -232,6 +230,7 @@ Filament Hexa **Pro v3** unlocks powerful features designed for serious projects
 * Multi-tenancy support
 * Meta option storage
 
+All of this — **starting at just $1 per license**.  
 A small investment for a much more capable permission system.
 
 Learn more in the official documentation:  

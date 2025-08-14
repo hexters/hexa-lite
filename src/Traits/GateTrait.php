@@ -27,7 +27,6 @@ trait GateTrait
                 $data['names'] = app($component)->defineGates();
                 return $data;
             });
-
         Config::set(['hexa-lite-roles' => $rolesData]);
     }
 

@@ -1,10 +1,10 @@
 <?php
 
-namespace Hexters\HexaLite\Resources\RoleResource\Pages;
+namespace Hexters\HexaLite\Resources\Roles\Pages;
 
-use Hexters\HexaLite\Resources\RoleResource;
-use Filament\Actions;
+use Filament\Actions\DeleteAction;
 use Filament\Resources\Pages\EditRecord;
+use Hexters\HexaLite\Resources\Roles\RoleResource;
 
 class EditRole extends EditRecord
 {
@@ -13,7 +13,7 @@ class EditRole extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            Actions\DeleteAction::make()
+            DeleteAction::make()
                 ->visible(fn() => hexa()->can('role.delete')),
         ];
     }
@@ -29,7 +29,6 @@ class EditRole extends EditRecord
 
         return $data;
     }
-
 
     protected function mutateFormDataBeforeSave(array $data): array
     {
