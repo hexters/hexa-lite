@@ -10,6 +10,14 @@ This plugin is intended only for Administrators, as it has a separate admin tabl
 
 [FilamentPHP](https://filamentphp.com/) is a lightweight and flexible PHP framework designed for building web applications. It aims to simplify application development by providing a clear structure and high modularity. The framework emphasizes speed, efficiency, and comes with many built-in features that facilitate effective web application development.
 
+## Version Docs.
+
+|Version|Filament|Doc.|
+|:-:|:-:|-|
+|V1|V3|[Read Doc.](https://github.com/hexters/hexa-lite/blob/main/docs/README.V1.md)|
+|V2|V3|[Read Doc.](https://github.com/hexters/hexa-lite/blob/main/docs/README.V2.md)|
+|V3|V4|[Read Doc.](https://github.com/hexters/hexa-lite/blob/main/README.md)|
+
 ## Installation
 
 > **Note** <br>
