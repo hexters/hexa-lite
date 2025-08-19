@@ -1,9 +1,9 @@
-# Filament Hexa Lite - V2
+# Filament V4 & Hexa Lite V3
 
-**Filament Hexa Lite** is a free and developer-friendly **role and permission management plugin** for [FilamentPHP](https://filamentphp.com/).  
+**Filament Hexa Lite** is a free and developer-friendly **role and permission management plugin** for [FilamentPHP V4](https://filamentphp.com/).  
 It helps you manage user roles and access permissions across Resources, Pages, and Widgets — with support for multi-panel apps via custom guards.
 
-Currently in version 2, Hexa Lite is more intuitive, customizable, and production-ready.
+Currently in version 3, Hexa Lite is more intuitive, customizable, and production-ready.
 
 ![Banner](https://github.com/hexters/assets/blob/main/hexa/v2/banner.png?raw=true)
 
@@ -25,13 +25,13 @@ Currently in version 2, Hexa Lite is more intuitive, customizable, and productio
 - [Issues & Feedback](#issues--feedback)
 
 ---
-
+    
 ## Installation
 
 Install the package via Composer:
 
 ```bash
-composer require hexters/hexa-lite:"2.0"
+composer require hexters/hexa-lite
 ````
 
 Run the database migration:
@@ -71,20 +71,21 @@ class User extends Authenticatable
 
 ## Adding Role Selection
 
-To allow role assignment via the admin panel, add a select input to your `UserResource` form:
+To allow role assignment via the admin panel, add a select input to your `UserForm` class:
 
 ```php
-use Filament\Forms;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
 
 public static function form(Form $form): Form
 {
     return $form
         ->schema([
-            Forms\Components\TextInput::make('email')
+            TextInput::make('email')
                 ->unique(ignoreRecord: true)
                 ->required(),
 
-            Forms\Components\Select::make('roles')
+            Select::make('roles')
                 ->label(__('Role Name'))
                 ->relationship('roles', 'name')
                 ->placeholder(__('Superuser')),
@@ -210,7 +211,7 @@ Gate::forUser(User::first())->allows('user.create');
 
 Need more flexibility and control?
 
-Filament Hexa **Pro v2** unlocks powerful features designed for serious projects:
+Filament Hexa **Pro v3** unlocks powerful features designed for serious projects:
 
 * Role & permission descriptions
 * Custom role sorting
@@ -218,7 +219,6 @@ Filament Hexa **Pro v2** unlocks powerful features designed for serious projects
 * Multi-tenancy support
 * Meta option storage
 
-All of this — **starting at just $1 per license**.  
 A small investment for a much more capable permission system.
 
 Learn more in the official documentation:  
