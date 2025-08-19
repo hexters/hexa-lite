@@ -15,22 +15,6 @@ Currently in version 2, Hexa Lite is more intuitive, customizable, and productio
 |V2|V3|[Read Doc.](https://github.com/hexters/hexa-lite/blob/main/docs/README.V2.md)|
 |V3|V4|[Read Doc.](https://github.com/hexters/hexa-lite/blob/main/README.md)|
 
-## Index
-
-- [Installation](#installation)
-- [Adding Role Selection](#adding-role-selection)
-- [Multi Panel Support](#multi-panel-support)
-- [Defining Permissions](#defining-permissions)
-- [Access Control](#access-control)
-  - [Check Permissions in Code](#check-permissions-in-code)
-  - [Visible Access](#visible-access)
-  - [Laravel Integration](#laravel-integration)
-- [Available Traits](#available-traits)
-- [Features in Pro Version](#features-in-pro-version)
-- [License](#license)
-- [Issues & Feedback](#issues--feedback)
-
-
 ## Installation
 
 Install the package via Composer:
