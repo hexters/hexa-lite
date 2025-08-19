@@ -7,7 +7,6 @@ Currently in version 2, Hexa Lite is more intuitive, customizable, and productio
 
 ![Banner](https://github.com/hexters/assets/blob/main/hexa/v2/banner.png?raw=true)
 
----
 
 ## Index
 
@@ -24,7 +23,6 @@ Currently in version 2, Hexa Lite is more intuitive, customizable, and productio
 - [License](#license)
 - [Issues & Feedback](#issues--feedback)
 
----
 
 ## Installation
 
@@ -67,7 +65,6 @@ class User extends Authenticatable
 }
 ```
 
----
 
 ## Adding Role Selection
 
@@ -92,7 +89,6 @@ public static function form(Form $form): Form
 }
 ```
 
----
 
 ## Multi Panel Support
 
@@ -114,7 +110,6 @@ public function panel(Panel $panel): Panel
 
 Configure guards in `config/auth.php`.
 
----
 
 ## Defining Permissions
 
@@ -139,7 +134,6 @@ class UserResource extends Resource
 }
 ```
 
----
 
 ## Access Control
 
@@ -154,7 +148,6 @@ public static function canAccess(): bool
 }
 ```
 
----
 
 ### Check Permissions in Code
 
@@ -164,7 +157,6 @@ Useful in queued jobs, commands, or background services:
 return hexa()->user(User::first())->can('user.index');
 ```
 
----
 
 ### Visible Access
 
@@ -175,7 +167,6 @@ Actions\CreateAction::make('create')
     ->visible(fn() => hexa()->can(['user.index', 'user.create']));
 ```
 
----
 
 ### Laravel Integration
 
@@ -193,7 +184,6 @@ Gate::forUser(User::first())->allows('user.create');
 @endcan
 ```
 
----
 
 ## Available Traits
 
@@ -204,7 +194,6 @@ Gate::forUser(User::first())->allows('user.create');
 | `UuidGenerator`          | Use on models with `uuid` fields              |
 | `UlidGenerator`          | Use on models with `ulid` fields              |
 
----
 
 ## Features in Pro Version
 
@@ -224,14 +213,12 @@ A small investment for a much more capable permission system.
 Learn more in the official documentation:  
 👉 [Hexa Pro Documentation](https://github.com/hexters/hexa-docs)
 
----
 
 ## License
 
 This project is open-source and licensed under the **MIT License**.
 You are free to use, modify, and distribute it with attribution.
 
----
 
 ## Issues & Feedback
 
