@@ -26,7 +26,7 @@ class EditRole extends EditRecord
     protected function mutateFormDataBeforeFill(array $data): array
     {
         $data['gates'] = $data['access'];
-
+        
         return $data;
     }
 

@@ -15,10 +15,11 @@ class RoleForm
     {
         $permissions = collect(config('hexa-lite-roles'))
             ->map(function ($role) {
+                $key = \Illuminate\Support\Str::slug($role['name'], '_');
                 return Section::make($role['name'])
                     ->collapsed(false)
                     ->schema([
-                        CheckboxList::make('gates')
+                        CheckboxList::make("gates.{$key}")
                             ->searchable()
                             ->columns(2)
                             ->gridDirection(GridDirection::Row)

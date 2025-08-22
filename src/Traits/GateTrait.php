@@ -46,6 +46,17 @@ trait GateTrait
         return $gates;
     }
 
+    protected function mergeAccess($access): array
+    {
+        $gates = [];
+        foreach ($access as $accesss) {
+            foreach ($accesss as $access) {
+                $gates[] = $access;
+            }
+        }
+        return $gates;
+    }
+
     protected function registerGates(Panel $panel)
     {
         collect($this->callGates($panel))
@@ -67,7 +78,7 @@ trait GateTrait
 
                                 if (count($roles) > 0) {
                                     $gates = [];
-                                    foreach ($roles->pluck('access') as $accesss) {
+                                    foreach ($this->mergeAccess($roles->pluck('access')) as $accesss) {
                                         foreach ($accesss as $access) {
                                             $gates[] = $access;
                                         }
