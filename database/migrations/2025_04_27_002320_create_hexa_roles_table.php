@@ -17,7 +17,9 @@ return new class extends Migration
             $table->string('name');
             $table->foreignId('team_id')->nullable();
             $table->string('created_by_name')->nullable();
-            $table->json('access')->nullable();
+            $table->jsonb('access')->nullable();
+            $table->jsonb('gates')->nullable();
+            $table->jsonb('checkall')->nullable();
             $table->string('guard')->default('web');
             $table->timestamps();
         });
