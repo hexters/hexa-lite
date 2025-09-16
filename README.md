@@ -156,6 +156,9 @@ Users with no assigned role are treated as **Superusers** and have full access b
 To restrict access to a resource:
 
 ```php
+use Illuminate\Auth\Access\Response;
+use Illuminate\Database\Eloquent\Model;
+
     public static function getViewAnyAuthorizationResponse(): Response
     {
         return hexa()->can('user.index')
