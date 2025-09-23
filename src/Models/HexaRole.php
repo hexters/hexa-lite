@@ -23,7 +23,9 @@ class HexaRole extends Model
     ];
 
     protected $casts = [
-        'access' => 'array'
+        'access' => 'array',
+        'gates' => 'array',
+        'checkall' => 'array',
     ];
 
     public function team()
