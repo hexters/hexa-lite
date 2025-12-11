@@ -50,6 +50,14 @@ Run the database migration:
 ```bash
 php artisan migrate
 ```
+(Optional) Publish configuration, migration, and views:
+If you want to customize the configuration, migration, or views, you can publish them:
+
+```bash
+php artisan vendor:publish --tag=hexa-config
+php artisan vendor:publish --tag=hexa-migrations
+php artisan vendor:publish --tag=hexa-views
+```
 
 Register the plugin in your Filament panel:
 

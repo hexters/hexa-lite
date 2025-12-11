@@ -32,7 +32,7 @@ class HexaLiteServiceProvider extends ServiceProvider
 
         $this->publishes([
             __DIR__ . '/../config/hexa.php' => config_path('hexa.php'),
-        ]);
+        ], 'hexa-config');
     }
 
     protected function registerView()
@@ -41,6 +41,10 @@ class HexaLiteServiceProvider extends ServiceProvider
             __DIR__ . '/../resources/views',
             'hexa'
         );
+
+        $this->publishes([
+            __DIR__ . '/../resources/views' => resource_path('views/vendor/hexa'),
+        ], 'hexa-views');
     }
 
     protected function registerMigration()
@@ -48,5 +52,9 @@ class HexaLiteServiceProvider extends ServiceProvider
         $this->loadMigrationsFrom(
             __DIR__ . '/../database/migrations',
         );
+
+        $this->publishes([
+            __DIR__ . '/../database/migrations' => database_path('migrations'),
+        ], 'hexa-migrations');
     }
 }
