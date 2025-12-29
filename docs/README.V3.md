@@ -134,10 +134,43 @@ Users with no assigned role are treated as **Superusers** and have full access b
 To restrict access to a resource:
 
 ```php
-public static function canAccess(): bool
-{
-    return hexa()->can('user.index');
-}
+use Illuminate\Auth\Access\Response;
+use Illuminate\Database\Eloquent\Model;
+
+    public static function getViewAnyAuthorizationResponse(): Response
+    {
+        return hexa()->can('user.index')
+            ? Response::allow()
+            : Response::deny();
+    }
+
+    public static function getCreateAuthorizationResponse(): Response
+    {
+        return hexa()->can('user.create')
+            ? Response::allow()
+            : Response::deny(__('You do not have permission to create user.'));
+    }
+
+    public static function getEditAuthorizationResponse(Model $record): Response
+    {
+        return hexa()->can('user.update')
+            ? Response::allow()
+            : Response::deny(__('You do not have permission to edit this.'));
+    }
+
+    public static function getDeleteAuthorizationResponse(Model $record): Response
+    {
+        return hexa()->can('user.delete')
+            ? Response::allow()
+            : Response::deny(__('You do not have permission to delete user.'));
+    }
+
+    public static function getDeleteAnyAuthorizationResponse(): Response
+    {
+        return hexa()->can('user.delete')
+            ? Response::allow()
+            : Response::deny(__('You do not have permission to delete users.'));
+    }
 ```
 
 
