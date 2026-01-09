@@ -1,52 +1,46 @@
 <div
     x-data="{
         allChecked: false,
-        init() {
-            this.updateState()
-        },
         toggleAll() {
             this.allChecked = !this.allChecked
 
-            // Find all checkbox inputs within the form
             const form = this.$el.closest('form')
             if (!form) return
 
-            // Get all checkboxes that are part of the gates (permission checkboxes)
-            const checkboxes = form.querySelectorAll('input[type=checkbox][id*=gates]')
+            const targetText = this.allChecked ? 'select all' : 'deselect all'
 
-            checkboxes.forEach(checkbox => {
-                if (checkbox.checked !== this.allChecked) {
-                    checkbox.checked = this.allChecked
-                    checkbox.dispatchEvent(new Event('change', { bubbles: true }))
+            // Find all elements that might be clickable toggle buttons
+            // Filament renders these as various elements (span, button, a) with click handlers
+            const clickableSelectors = [
+                'span[x-on\\:click]',
+                'span[\\@click]',
+                'button[x-on\\:click]',
+                'button[\\@click]',
+                'a[x-on\\:click]',
+                'a[\\@click]',
+                '[wire\\:click]',
+            ].join(', ')
+
+            const clickables = form.querySelectorAll(clickableSelectors)
+
+            clickables.forEach(el => {
+                // Skip if this is our own toggle button
+                if (this.$el.contains(el)) return
+
+                const text = el.textContent.trim().toLowerCase()
+                if (text === targetText) {
+                    el.click()
                 }
             })
-        },
-        updateState() {
-            const form = this.$el.closest('form')
-            if (!form) return
-
-            const checkboxes = form.querySelectorAll('input[type=checkbox][id*=gates]')
-            if (checkboxes.length === 0) {
-                this.allChecked = false
-                return
-            }
-
-            const checkedCount = Array.from(checkboxes).filter(cb => cb.checked).length
-            this.allChecked = checkedCount === checkboxes.length && checkboxes.length > 0
         }
     }"
-    x-init="init()"
-    @change.window="updateState()"
-    class="flex items-center gap-2 cursor-pointer select-none"
-    @click="toggleAll()"
+    class="inline-flex items-center gap-2 cursor-pointer select-none"
 >
-    <x-filament::input.checkbox
-        x-bind:checked="allChecked"
-        x-on:click.stop="toggleAll()"
-    />
-
-    <span class="font-medium text-sm text-gray-700 dark:text-gray-300">
-        <span x-show="!allChecked">{{ __('Select All') }}</span>
-        <span x-show="allChecked" x-cloak>{{ __('Deselect All') }}</span>
+    <span
+        @click="toggleAll()"
+        class="text-sm font-medium text-primary-600 hover:text-primary-500 dark:text-primary-400 dark:hover:text-primary-300 cursor-pointer"
+    >
+        <span x-show="!allChecked">{{ __('Select All Permissions') }}</span>
+        <span x-show="allChecked" x-cloak>{{ __('Deselect All Permissions') }}</span>
     </span>
 </div>
