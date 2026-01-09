@@ -2,14 +2,14 @@
 
 namespace Hexters\HexaLite\Models;
 
-use App\Models\Team;
 use Filament\Facades\Filament;
 use Hexters\HexaLite\Helpers\UuidGenerator;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class HexaRole extends Model
 {
-
     use UuidGenerator;
 
     protected $table = 'hexa_roles';
@@ -28,8 +28,18 @@ class HexaRole extends Model
         'checkall' => 'array',
     ];
 
-    public function team()
+    public function team(): BelongsTo
     {
         return $this->belongsTo(Filament::getTenantModel());
+    }
+
+    public function users(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            config('hexa.models.user'),
+            'hexa_role_user',
+            'role_id',
+            'user_id'
+        );
     }
 }

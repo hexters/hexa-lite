@@ -19,9 +19,13 @@ class RolesTable
                 TextColumn::make('name')
                     ->searchable()
                     ->label(__('Role Name')),
+                TextColumn::make('users_count')
+                    ->counts('users')
+                    ->sortable()
+                    ->label(__('Users')),
                 TextColumn::make('created_by_name')
                     ->searchable()
-                    ->label(__('Crated By')),
+                    ->label(__('Created By')),
                 TextColumn::make('created_at')
                     ->sortable()
                     ->dateTime('d/m/y H:i'),
