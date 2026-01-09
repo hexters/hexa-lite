@@ -14,6 +14,7 @@ use Hexters\HexaLite\Resources\Roles\Pages\EditRole;
 use Hexters\HexaLite\Resources\Roles\Pages\ListRoles;
 use Hexters\HexaLite\Resources\Roles\Schemas\RoleForm;
 use Hexters\HexaLite\Resources\Roles\Tables\RolesTable;
+use Hexters\HexaLite\Resources\Roles\Widgets\RoleUsersWidget;
 
 class RoleResource extends Resource
 {
@@ -77,6 +78,13 @@ class RoleResource extends Resource
     {
         return [
             //
+        ];
+    }
+
+    public static function getWidgets(): array
+    {
+        return [
+            RoleUsersWidget::class,
         ];
     }
 
