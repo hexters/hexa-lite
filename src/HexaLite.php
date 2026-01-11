@@ -32,12 +32,13 @@ class HexaLite implements Plugin
         $this->registerGateList($panel);
 
         $panel->navigationItems([
-            NavigationItem::make($this->getNavigationLabel())
-                ->visible(fn() => hexa()->can('role.index'))
-                ->url(RoleResource::getUrl())
-                ->isActiveWhen(fn() => request()->fullUrlIs(RoleResource::getUrl() . '*'))
+            NavigationItem::make('hexa-roles')
+                ->label(fn (): string => $this->getNavigationLabel())
+                ->visible(fn () => hexa()->can('role.index'))
+                ->url(fn (): string => RoleResource::getUrl())
+                ->isActiveWhen(fn () => request()->fullUrlIs(RoleResource::getUrl() . '*'))
                 ->icon(Heroicon::OutlinedLockClosed)
-                ->group($this->getNavigationGroup()),
+                ->group(fn (): string => $this->getNavigationGroup()),
         ]);
     }
 
