@@ -1,2 +1,8 @@
 vendor
 *.lock
+/.idea/.gitignore
+/.idea/hexa.iml
+/.idea/misc.xml
+/.idea/modules.xml
+/.idea/php.xml
+/.idea/vcs.xml

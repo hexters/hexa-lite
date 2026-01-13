@@ -5,6 +5,7 @@ namespace Hexters\HexaLite\Resources\Roles\Pages;
 use Filament\Actions\DeleteAction;
 use Filament\Resources\Pages\EditRecord;
 use Hexters\HexaLite\Resources\Roles\RoleResource;
+use Hexters\HexaLite\Resources\Roles\Widgets\RoleUsersWidget;
 
 class EditRole extends EditRecord
 {
@@ -14,7 +15,14 @@ class EditRole extends EditRecord
     {
         return [
             DeleteAction::make()
-                ->visible(fn() => hexa()->can('role.delete')),
+                ->visible(fn () => hexa()->can('role.delete')),
+        ];
+    }
+
+    protected function getFooterWidgets(): array
+    {
+        return [
+            RoleUsersWidget::class,
         ];
     }
 
@@ -26,7 +34,7 @@ class EditRole extends EditRecord
     protected function mutateFormDataBeforeFill(array $data): array
     {
         $data['gates'] = $data['access'];
-        
+
         return $data;
     }
 
