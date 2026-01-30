@@ -1,4 +1,4 @@
-# Filament V4 & Hexa Lite V3
+# Filament V5 & Hexa Lite V3
 
 [![Latest Stable Version](https://poser.pugx.org/hexters/hexa-lite/v/stable)](https://packagist.org/packages/hexters/hexa-lite)
 [![Total Downloads](https://poser.pugx.org/hexters/hexa-lite/downloads)](https://packagist.org/packages/hexters/hexa-lite)
