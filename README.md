@@ -5,7 +5,7 @@
 [![License](https://poser.pugx.org/hexters/hexa-lite/license)](https://packagist.org/packages/hexters/hexa-lite)
 
 
-**Filament Hexa Lite** is a free and developer-friendly **role and permission management plugin** for [FilamentPHP V4](https://filamentphp.com/).  
+**Filament Hexa Lite** is a free and developer-friendly **role and permission management plugin** for [FilamentPHP V5](https://filamentphp.com/).  
 It helps you manage user roles and access permissions across Resources, Pages, and Widgets — with support for multi-panel apps via custom guards.
 
 Currently in version 3, Hexa Lite is more intuitive, customizable, and production-ready.
