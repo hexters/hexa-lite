@@ -42,21 +42,24 @@ class HexaHelper
 
     private function userCan(Authenticatable $user, array|string $permissions)
     {
-        if (method_exists($user, 'roles')) {
-            if (! empty($user->roles)) {
-                $gates = [];
-                foreach ($user->roles as $role) {
-                    if (is_array($role->access)) {
-                        foreach ($role->access as $access) {
-                            $gates[] = $access;
-                        }
-                    }
-                }
-                $permissions = is_array($permissions) ? $permissions : [$permissions];
-                return ! empty(array_intersect($gates, $permissions));
-            }
+        if (! method_exists($user, 'roles')) {
+            return false;
+        }
+
+        // No role assigned means the user is treated as a Superuser.
+        if ($user->roles->isEmpty()) {
             return true;
         }
-        return false;
+
+        // Role access is stored grouped by section, e.g. ['role' => ['role.index', ...]],
+        // so flatten every level down to the individual gate keys.
+        $gates = collect($user->roles)
+            ->pluck('access')
+            ->flatten()
+            ->all();
+
+        $permissions = is_array($permissions) ? $permissions : [$permissions];
+
+        return ! empty(array_intersect($gates, $permissions));
     }
 }
