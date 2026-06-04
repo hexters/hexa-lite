@@ -3,6 +3,7 @@
 [![Latest Stable Version](https://poser.pugx.org/hexters/hexa-lite/v/stable)](https://packagist.org/packages/hexters/hexa-lite)
 [![Total Downloads](https://poser.pugx.org/hexters/hexa-lite/downloads)](https://packagist.org/packages/hexters/hexa-lite)
 [![License](https://poser.pugx.org/hexters/hexa-lite/license)](https://packagist.org/packages/hexters/hexa-lite)
+[![Documentation](https://img.shields.io/badge/docs-online-f59e0b)](https://hexters.github.io/hexa-docs/)
 
 
 **Filament Hexa Lite** is a free and developer-friendly **role and permission management plugin** for [FilamentPHP V5](https://filamentphp.com/).  
@@ -11,6 +12,8 @@ It helps you manage user roles and access permissions across Resources, Pages, a
 Currently in version 3, Hexa Lite is more intuitive, customizable, and production-ready.
 
 ![Banner](https://github.com/hexters/assets/blob/main/hexa/v2/banner.png?raw=true)
+
+> 📖 **Full documentation:** [hexters.github.io/hexa-docs](https://hexters.github.io/hexa-docs/)
 
 
 ## Version Docs.
@@ -257,7 +260,7 @@ Filament Hexa **Pro v3** unlocks powerful features designed for serious projects
 A small investment for a much more capable permission system.
 
 Learn more in the official documentation:  
-👉 [Hexa Pro Documentation](https://github.com/hexters/hexa-docs)
+👉 [Hexa Pro Documentation](https://hexters.github.io/hexa-docs/)
 
 
 ## License
